@@ -638,7 +638,7 @@ int main()
   // ID based on MAC Adddress of eth0
   if(strlen(eui) > 0) {
    printf( "Gateway ID: Overrided by config [%s]", eui);
-   sscanf(eui, "%02x:%02x:%02x:%02x:%02x:%02x",
+   sscanf(eui, "%02x:%02x:%02x:%02x:%02x:%02x\n",
               &ifr.ifr_hwaddr.sa_data[0],
               &ifr.ifr_hwaddr.sa_data[1],
               &ifr.ifr_hwaddr.sa_data[2],
