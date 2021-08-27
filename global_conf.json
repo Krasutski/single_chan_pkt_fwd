@@ -14,6 +14,7 @@
     "email": "contact@email.com",
     "desc": "Adafruit Radio Pi LoRa 1-Ch Gateway",
     "if_name": "usb0",
+    "eui":"CA:D0:3A:32:37:9E",
     "servers": [
       {
         "address": "router.us.thethings.network",
