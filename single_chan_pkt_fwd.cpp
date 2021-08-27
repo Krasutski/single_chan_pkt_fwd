@@ -638,7 +638,7 @@ int main()
 
   // ID based on MAC Adddress of eth0
   if(strlen(eui) > 0) {
-   printf( "Gateway ID: Overrided by config [%s]", eui);
+   printf( "Gateway ID Overrided by config [%s]\n", eui);
    sscanf(eui, "%02x:%02x:%02x:%02x:%02x:%02x\n",
               &ifr.ifr_hwaddr.sa_data[0],
               &ifr.ifr_hwaddr.sa_data[1],
@@ -704,7 +704,7 @@ void LoadConfiguration(string configurationFile)
             nssPin = confIt->value.GetUint();
           } else if (key.compare("pin_dio0") == 0) {
             dio0 = confIt->value.GetUint();
-          } else if (key.compare("pin_rstPin") == 0) {
+          } else if (key.compare("pin_rst") == 0) {
             rstPin = confIt->value.GetUint();
           }
         }
