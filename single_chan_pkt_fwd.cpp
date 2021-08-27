@@ -647,9 +647,8 @@ int main()
               (uint8_t)ifr.ifr_hwaddr.sa_data[3],
               (uint8_t)ifr.ifr_hwaddr.sa_data[4],
               (uint8_t)ifr.ifr_hwaddr.sa_data[5]
-  );
-
-  printf("Listening at SF%i on %.6lf Mhz.\n", sf,(double)freq/1000000);
+  printf("Listening at SF%i on %.6lf Mhz.\n", sf, (double)freq/1000000);        
+  printf( "SF %d, BW %d", sf, bw);
   printf("-----------------------------------\n");
 
   while(1) {
