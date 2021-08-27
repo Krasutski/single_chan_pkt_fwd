@@ -17,12 +17,12 @@
     "eui":"CA:D0:3A:32:37:9E",
     "servers": [
       {
-        "address": "router.us.thethings.network",
+        "address": "eu1.cloud.thethings.network",
         "port": 1700,
         "enabled": true
       },
       {
-        "address": "router.eu.thethings.network",
+        "address": "eu1.cloud.thethings.network",
         "port": 1700,
         "enabled": false
       }
