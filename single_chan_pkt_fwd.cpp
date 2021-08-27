@@ -654,7 +654,7 @@ int main()
               (uint8_t)ifr.ifr_hwaddr.sa_data[4],
               (uint8_t)ifr.ifr_hwaddr.sa_data[5]);  
   printf("Listening at SF%i on %.6lf Mhz.\n", sf, (double)freq/1000000);        
-  printf( "SF %d, BW %d", sf, bw);
+  printf( "SF %d, BW %d\n", sf, bw);
   printf("-----------------------------------\n");
 
   while(1) {
@@ -784,5 +784,5 @@ void PrintConfiguration()
   printf("Gateway Configuration\n");
   printf("  %s (%s)\n  %s\n", platform, email, description);
   printf("  Latitude=%.8f\n  Longitude=%.8f\n  Altitude=%d\n", lat,lon,alt);
-  printf("  Interface %d\n", if_name);
+  printf("  Interface %s\n", if_name);
 }
