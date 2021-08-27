@@ -252,6 +252,7 @@ bool ReceivePkt(char* payload, uint8_t* p_length)
     uint8_t currentAddr = ReadRegister(REG_FIFO_RX_CURRENT_ADDR);
     uint8_t receivedCount = ReadRegister(REG_RX_NB_BYTES);
     *p_length = receivedCount;
+   printf( "Rx data size %d\r\n", receivedCount);
 
     WriteRegister(REG_FIFO_ADDR_PTR, currentAddr);
 
