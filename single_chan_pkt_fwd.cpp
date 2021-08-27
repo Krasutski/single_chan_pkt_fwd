@@ -98,8 +98,9 @@ int   alt =  0;
 /* Informal status fields */
 char platform[24] ;    /* platform definition */
 char email[40] ;       /* used for contact email */
+char eui[8*3+1] = "";
+char if_name[IFNAMSIZ] = "eth0";
 char description[64] ; /* used for free form description */
-bool is_pizero = false;
 
 // Set spreading factor (SF7 - SF12), &nd  center frequency
 // Overwritten by the ones set in global_conf.json
@@ -631,22 +632,27 @@ int main()
   si_other.sin_family = AF_INET;
 
   ifr.ifr_addr.sa_family = AF_INET;
-  if (is_pizero) { // pi zero
-    strncpy(ifr.ifr_name, "wlan0", IFNAMSIZ - 1);
-  }
-  else {
-    strncpy(ifr.ifr_name, "eth0", IFNAMSIZ - 1);
-  }
+  strncpy(ifr.ifr_name, if_name, IFNAMSIZ - 1);
   ioctl(s, SIOCGIFHWADDR, &ifr);
 
   // ID based on MAC Adddress of eth0
+  if(strlen(eui) > 0) {
+   sscanf(eui, "%02x:%02x:%02x:%02x:%02x:%02x",
+              (uint8_t)ifr.ifr_hwaddr.sa_data[0],
+              (uint8_t)ifr.ifr_hwaddr.sa_data[1],
+              (uint8_t)ifr.ifr_hwaddr.sa_data[2],
+              (uint8_t)ifr.ifr_hwaddr.sa_data[3],
+              (uint8_t)ifr.ifr_hwaddr.sa_data[4],
+              (uint8_t)ifr.ifr_hwaddr.sa_data[5]);
+     printf( "Gateway ID: Overrideb by config");
+  }
   printf( "Gateway ID: %.2x:%.2x:%.2x:ff:ff:%.2x:%.2x:%.2x\n",
               (uint8_t)ifr.ifr_hwaddr.sa_data[0],
               (uint8_t)ifr.ifr_hwaddr.sa_data[1],
               (uint8_t)ifr.ifr_hwaddr.sa_data[2],
               (uint8_t)ifr.ifr_hwaddr.sa_data[3],
               (uint8_t)ifr.ifr_hwaddr.sa_data[4],
-              (uint8_t)ifr.ifr_hwaddr.sa_data[5]
+              (uint8_t)ifr.ifr_hwaddr.sa_data[5]);  
   printf("Listening at SF%i on %.6lf Mhz.\n", sf, (double)freq/1000000);        
   printf( "SF %d, BW %d", sf, bw);
   printf("-----------------------------------\n");
@@ -714,7 +720,12 @@ void LoadConfiguration(string configurationFile)
             lon = confIt->value.GetDouble();
           } else if (memberType.compare("ref_altitude") == 0) {
             alt = confIt->value.GetUint(); 
-
+          } else if (memberType.compare("if_name") == 0 && confIt->value.IsString()) {
+            string str = confIt->value.GetString();           
+            strcpy(if_name, str.length()<=IFNAMSIZ ? str.c_str() : "if_name too long"); 
+          } else if (memberType.compare("eui") == 0 && confIt->value.IsString()) {
+            string str = confIt->value.GetString();           
+            strcpy(eui, str.length()<=25 ? str.c_str() : "eui str too long");
           } else if (memberType.compare("name") == 0 && confIt->value.IsString()) {
             string str = confIt->value.GetString();
             strcpy(platform, str.length()<=24 ? str.c_str() : "name too long");
@@ -724,8 +735,6 @@ void LoadConfiguration(string configurationFile)
           } else if (memberType.compare("desc") == 0 && confIt->value.IsString()) {
             string str = confIt->value.GetString();
             strcpy(description, str.length()<=64 ? str.c_str() : "description is too long");
-          } else if (memberType.compare("is_pi_zero") >= 0 && confIt->value.IsBool()) {
-            is_pizero = confIt->value.GetBool();
           } else if (memberType.compare("servers") == 0) {
             const Value& serverConf = confIt->value;
             if (serverConf.IsObject()) {
@@ -775,5 +784,5 @@ void PrintConfiguration()
   printf("Gateway Configuration\n");
   printf("  %s (%s)\n  %s\n", platform, email, description);
   printf("  Latitude=%.8f\n  Longitude=%.8f\n  Altitude=%d\n", lat,lon,alt);
-  printf("Pi Zero? %d\n", is_pizero);
+  printf("  Interface %d\n", if_name);
 }
