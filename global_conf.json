@@ -13,7 +13,7 @@
     "name": "Radio Pi Bonnet",
     "email": "contact@email.com",
     "desc": "Adafruit Radio Pi LoRa 1-Ch Gateway",
-    "if_mac": "usb0",
+    "if_name": "usb0",
     "servers": [
       {
         "address": "router.us.thethings.network",
