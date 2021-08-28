@@ -604,6 +604,9 @@ bool Receivepacket()
   return ret;
 }
 
+    char data_received[1024];        
+    struct sockaddr from;
+    addrlen = sizeof(from);
 int main()
 {
   struct timeval nowtime;
@@ -676,16 +679,13 @@ int main()
     }
     // Let some time to the OS
     delay(1);
-    static char data_received[1024];        
-    static struct sockaddr from;
-    int addrlen = sizeof(from);
-    int  bytes_received = recvfrom(s, data_received, sizeof(data_received), 0, &from, (socklen_t *)&addrlen);
+    int  bytes_received = recvfrom(s, data_received, sizeof(data_received), 0, &from, &addrlen);
     if(bytes_received>0) {
         printf("Receive from server %d\n", bytes_received);
         for(int i=0;i<bytes_received;i++) {
-            printf("%c", data_received[i]);
+            //printf("%c", data_received[i]);
         }
-        printf("<<--End\n\n");
+        //printf("<<--End\n\n");
     }
   }
   return (0);
