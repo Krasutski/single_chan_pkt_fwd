@@ -685,9 +685,9 @@ int main()
     // Let some time to the OS
     //delay(1);
     int  bytes_received = recvfrom(s, data_received, sizeof(data_received), 0, &from, &addrlen);
-    if(bytes_received>0) {
-        printf("\nReceive from server %d\n", bytes_received);
-        for(int i=0;i<bytes_received;i++) {
+    if(addrlen>0) {
+        printf("\nReceive from server %d\n", addrlen);
+        for(int i=0;i<addrlen;i++) {
             printf("%c", data_received[i]);
         }
         printf("<<--End<<--\n\n");
