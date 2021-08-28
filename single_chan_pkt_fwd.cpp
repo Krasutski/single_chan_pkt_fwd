@@ -50,7 +50,7 @@ static const int SPI_CHANNEL = 0;
 bool sx1272 = true;
 
 struct sockaddr_in si_other;
-int s;
+int s = 0;
 int slen = sizeof(si_other);
 struct ifreq ifr;
 
@@ -680,7 +680,7 @@ int main()
     }
     // Let some time to the OS
     delay(1);
-   
+    if(s != 0) {
     int  bytes_received = recvfrom(s, data_received, sizeof(data_received), 0, &from, &addrlen);
     if(bytes_received>0) {
         printf("Receive from server %d\n", bytes_received);
@@ -690,6 +690,7 @@ int main()
         }
         printf("<<--End\n\n");
         }
+    }
     }
   }
   return (0);
