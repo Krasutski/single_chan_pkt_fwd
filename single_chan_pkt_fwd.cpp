@@ -683,18 +683,14 @@ int main()
       cp_up_pkt_fwd = 0;
     }
     // Let some time to the OS
-    delay(1);
-    if(s != 0) {
+    //delay(1);
     int  bytes_received = recvfrom(s, data_received, sizeof(data_received), 0, &from, &addrlen);
     if(bytes_received>0) {
         printf("Receive from server %d\n", bytes_received);
-        if(bytes_received > 20) {
         for(int i=0;i<bytes_received;i++) {
             printf("%c", data_received[i]);
         }
-        printf("<<--End\n\n");
-        }
-    }
+        printf("<<--End<<--\n\n");
     }
   }
   return (0);
