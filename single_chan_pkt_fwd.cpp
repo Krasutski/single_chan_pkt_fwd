@@ -683,10 +683,11 @@ int main()
       cp_up_pkt_fwd = 0;
     }
     // Let some time to the OS
-    //delay(1);
+    delay(1);
     int  bytes_received = recvfrom(s, data_received, sizeof(data_received), 0, &from, &addrlen);
-    if(addrlen>0) {
-        printf("\nReceive from server %d\n", addrlen);
+    if(bytes_received>0) {
+        printf("\nReceive from server %d\n", bytes_received);
+        printf("from IP address %s\n", inet_ntoa(from.sin_addr));
         for(int i=0;i<addrlen;i++) {
             printf("%c", data_received[i]);
         }
